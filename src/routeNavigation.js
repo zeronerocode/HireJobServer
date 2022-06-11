@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
-// const users = require("./routes/users");
+const recruiter = require("./routes/recruiter");
 
-// router.use("/users", users);
+router.use("/recruiter", recruiter);
 
 module.exports = router;
