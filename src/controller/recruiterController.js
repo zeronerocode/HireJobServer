@@ -4,7 +4,7 @@ const { getRecruiterByEmail, create } = require("../models/recruiterModel");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 // const jwt = require("jsonwebtoken");
-const { sendEmail } = require("../helper/mail");
+// const { sendEmail } = require("../helper/mail");
 const errorServ = new createError.InternalServerError();
 const helper = require("../helper/response");
 const auth = require("../helper/auth_recruiter");
@@ -30,7 +30,7 @@ const register = async (req, res, next) => {
       hp,
     };
     await create(setData);
-    sendEmail(email);
+    // sendEmail(email);
     helper.response(res, null, 201, "you are successfully registered");
   } catch (error) {
     console.log(error);
