@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS public.portofolio
 
 CREATE TABLE profile
 (
-    id INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    user_id VARCHAR(200),
     jobdesk VARCHAR(200) ,
     address VARCHAR(200) ,
     workplace VARCHAR(200) ,

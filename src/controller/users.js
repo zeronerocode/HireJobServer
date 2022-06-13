@@ -5,7 +5,6 @@ const { findEmail, insert, deleteUser } = require("../models/users");
 const { response } = require("../helper/response");
 const jwt = require("jsonwebtoken");
 const authHelper = require("../middleware/auth");
-// const { sendEmail } = require("../services/mail");
 
 const register = async (req, res, next) => {
   try {
@@ -16,7 +15,7 @@ const register = async (req, res, next) => {
     const hashPassword = bcrypt.hashSync(password, salt);
 
     if (rowCount) {
-      return next(createError(403, "Email Sudah Terdaftar"));
+      return next(createError(403, "email already exist"));
     }
 
     const data = {
@@ -28,7 +27,7 @@ const register = async (req, res, next) => {
     };
     await insert(data);
     // sendEmail(email);
-    response(res, data, 201, "user resgiter berhasil");
+    response(res, data, 201, "you are successfully registered");
   } catch (error) {
     console.log(error);
     next(new createError.InternalServerError());
@@ -41,11 +40,11 @@ const login = async (req, res, next) => {
     const { rows: [user] } = await findEmail(email);
     // const user = rows[0]
     if (!user) {
-      return response(res, null, 403, "email atau password anda salah");
+      return response(res, null, 403, "email or password is incorrect");
     }
     const validPassword = bcrypt.compareSync(password, user.password);
     if (!validPassword) {
-      return response(res, null, 403, "email atau password anda salah");
+      return response(res, null, 403, "email or password is incorrect");
     }
     delete user.password;
 
@@ -69,7 +68,7 @@ const delUser = (req, res, next) => {
   const email = req.params.email;
   deleteUser(email)
   .then(() => {
-    response(res, email, 201, "anda berhasil login");
+    response(res, email, 201, "User Deleted");
   })
   .catch((error) => {
     console.log(error);
@@ -87,7 +86,7 @@ const refreshToken = (req, res) => {
   const result = {
     refreshToken: authHelper.gerateRefreshToken(payload)
   };
-  response(res, result, 200, "update token berhasil");
+  response(res, result, 200, "you are successfully logged in");
 };
 module.exports = {
   register,
