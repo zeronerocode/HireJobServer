@@ -17,9 +17,7 @@ const register = async (req, res, next) => {
     const salt = bcrypt.genSaltSync(10);
     const hashPassword = bcrypt.hashSync(password, salt);
     // console.log(hashPassword);
-    if (rowCount) {
-      return next(createError(403, "email already exist"));
-    }
+
     const setData = {
       id: uuidv4(),
       email,
@@ -31,9 +29,19 @@ const register = async (req, res, next) => {
       role: "recruiter",
       recStatus: "not verified",
     };
-    await create(setData);
-    sendEmail(email);
-    helper.response(res, null, 201, "you are successfully registered");
+    if (rowCount) {
+      return next(createError(403, "email already exist"));
+    } else if (setData.hp.length < 11) {
+      return next(createError(403, "number must be 11 digit"));
+    } else if (setData.password.length < 6) {
+      return next(createError(403, "password must be 6-16 character"));
+    } else if (req.body.confirmPassword !== password) {
+      return next(createError(403, "password not match"));
+    } else {
+      await create(setData);
+      sendEmail(email);
+      helper.response(res, null, 201, "you are successfully registered");
+    }
   } catch (error) {
     console.log(error);
     next(errorServ);
@@ -64,6 +72,11 @@ const login = async (req, res, next) => {
       position: recruiters.position,
       role: recruiters.role,
       recStatus: recruiters.recStatus,
+      img_recruiter: recruiters.img_recruiter,
+      corps_description: recruiters.corps_description,
+      instagram: recruiters.instagram,
+      linkedin: recruiters.linkedin,
+      address: recruiters.address,
     };
 
     recruiters.token = authRecruiter.generateToken(payload);
