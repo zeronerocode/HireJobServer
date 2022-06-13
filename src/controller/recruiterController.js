@@ -4,10 +4,10 @@ const { getRecruiterByEmail, create } = require("../models/recruiterModel");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 // const jwt = require("jsonwebtoken");
-// const { sendEmail } = require("../helper/mail");
+const { sendEmail } = require("../helper/mail");
 const errorServ = new createError.InternalServerError();
 const helper = require("../helper/response");
-const auth = require("../helper/auth_recruiter");
+const authRecruiter = require("../helper/auth_recruiter");
 
 const register = async (req, res, next) => {
   try {
@@ -28,9 +28,11 @@ const register = async (req, res, next) => {
       corps_name,
       position,
       hp,
+      role: "recruiter",
+      recStatus: "not verified",
     };
     await create(setData);
-    // sendEmail(email);
+    sendEmail(email);
     helper.response(res, null, 201, "you are successfully registered");
   } catch (error) {
     console.log(error);
@@ -55,16 +57,24 @@ const login = async (req, res, next) => {
 
     const payload = {
       email: recruiters.email,
+      id: recruiters.id,
+      full_name: recruiters.full_name,
+      hp: recruiters.hp,
+      corps_name: recruiters.corps_name,
+      position: recruiters.position,
+      role: recruiters.role,
+      recStatus: recruiters.recStatus,
     };
 
-    recruiters.token = auth.generateToken(payload);
-    recruiters.refreshToken = auth.generateRefreshToken(payload);
+    recruiters.token = authRecruiter.generateToken(payload);
+    recruiters.refreshToken = authRecruiter.generateRefreshToken(payload);
     helper.response(res, recruiters, 200, "you are successfully logged in");
   } catch (error) {
     console.log(error);
     next(errorServ);
   }
 };
+
 module.exports = {
   register,
   login,

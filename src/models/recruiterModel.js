@@ -24,11 +24,23 @@ const create = async ({
   corps_name,
   position,
   hp,
+  role,
+  recStatus,
 }) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "INSERT INTO recruiters (id, email, password, full_name, corps_name,  position, hp) VALUES ($1, $2, $3, $4, $5, $6, $7)",
-      [id, email, password, full_name, corps_name, position, hp],
+      "INSERT INTO recruiters (id, email, password, full_name, corps_name,  position, hp, role, recStatus) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)",
+      [
+        id,
+        email,
+        password,
+        full_name,
+        corps_name,
+        position,
+        hp,
+        role,
+        recStatus,
+      ],
       (err, result) => {
         if (!err) {
           resolve(result);

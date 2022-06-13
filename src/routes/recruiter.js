@@ -1,8 +1,6 @@
 const router = require("express").Router();
-const recruiterController = require("../controller/recruiterController");
+const { register, login } = require("../controller/recruiterController");
 
-router
-  .post("/register", recruiterController.register)
-  .post("/login", recruiterController.login);
+router.post("/register", register).post("/login", login);
 
 module.exports = router;

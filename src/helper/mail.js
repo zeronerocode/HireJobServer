@@ -28,7 +28,9 @@ const sendEmail = async (email) => {
         accessToken: accessToken,
       },
     });
-    const token = jwt.sign({ email }, "secret", { expiresIn: "1h" });
+    const token = jwt.sign({ email }, process.env.SECRET_KEY, {
+      expiresIn: "1h",
+    });
     const mailOptions = {
       from: "Nocturnal <hasbipijarcamp@gmail.com>",
       to: email,
@@ -42,5 +44,5 @@ const sendEmail = async (email) => {
     console.log(error);
   }
 };
-
+// sendEmail("hasbialwi70@gmail.com");
 module.exports = { sendEmail };
