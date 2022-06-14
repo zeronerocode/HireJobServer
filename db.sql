@@ -13,22 +13,13 @@ TABLESPACE pg_default;
 CREATE TABLE IF NOT EXISTS public.portofolio
 (
     id INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    app_name VARCHAR(200) COLLATE ,
+    app_name VARCHAR(200),
     link_repo character varying(200) ,
     app_type character varying(200) ,
     app_image character varying(200) ,
     user_id character varying(200) ,
 )
 
-CREATE TABLE profile
-(
-    user_id VARCHAR(200),
-    jobdesk VARCHAR(200) ,
-    address VARCHAR(200) ,
-    workplace VARCHAR(200) ,
-    photo VARCHAR(200) ,
-    description VARCHAR(1000) ,
-)
 
 CREATE TABLE sklis
 (
@@ -55,7 +46,13 @@ CREATE TABLE users (
     full_name VARCHAR(64) NOT NULL,
     email VARCHAR(64) UNIQUE ,
     password VARCHAR(128),
+    roles VARCHAR(10) DEFAULT 'user',
     hp VARCHAR(14) ,
+    jobdesk VARCHAR(200) ,
+    address VARCHAR(200) ,
+    workplace VARCHAR(200) ,
+    photo VARCHAR(200) ,
+    description VARCHAR(1000) ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP
 );
