@@ -28,7 +28,13 @@ CREATE TABLE profile
     workplace VARCHAR(200) ,
     photo VARCHAR(200) ,
     description VARCHAR(1000) ,
-    skill json,
+)
+
+CREATE TABLE sklis
+(
+    id INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    user_id VARCHAR(200),
+    sklill_name VARCHAR(20)
 )
  
 
