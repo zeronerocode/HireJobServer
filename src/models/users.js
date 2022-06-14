@@ -15,6 +15,7 @@ const insert = ({ id, email, password, name, hp }) => {
   return new Promise((resolve, reject) => {
     pool.query("INSERT INTO users(id, email, password, full_name, hp)VALUES($1, $2, $3, $4, $5)", [id, email, password, name, hp], (error, result) => {
       if (!error) {
+        console.log(result);
         resolve(result);
       } else {
         reject(error);
