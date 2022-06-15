@@ -3,6 +3,7 @@ require("dotenv").config();
 
 const helmet = require("helmet");
 const cors = require("cors");
+const path = require("path");
 const createError = require("http-errors");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
@@ -21,7 +22,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
-app.use("img", express.static("./uploads"));
+app.use("img", express.static(path.join(__dirname, "./uploads")));
 app.use("/v1", routeNavigation);
 
 app.use((req, res, next) => {
@@ -45,4 +46,4 @@ app.use((err, req, res, next) => {
     message: messError,
   });
 });
-app.listen(port, () => console.log(`Server running at on Port: ${port}!`));
+app.listen(port, () => console.log(`Server running at on Port: ${port}! `));
