@@ -1,6 +1,35 @@
 const router = require("express").Router();
-const { register, login } = require("../controller/recruiterController");
+const {
+  register,
+  login,
+  deleteRec,
+  refreshToken,
+} = require("../controller/authRecruiter");
+const {
+  profile,
+  updateProfile,
+  list,
+  getRecById,
+} = require("../controller/recruiterControllers");
+// const uploads = require("../middleware/multer");
+const { protect } = require("../middleware/auth_recruiter");
 
-router.post("/register", register).post("/login", login);
+router
+  // auth
+  .post("/register", register)
+  .post("/login", login)
+  .delete("/:id", protect, deleteRec)
+  .post("/refresh-token", refreshToken)
+
+  // profile
+  .get("/profile", protect, profile)
+  .patch("/:id", updateProfile)
+
+  //recruiter home
+  .get("/", list)
+  .get("/:id", getRecById);
+// .get("/:id", jwtAuth, detail)
+// .put("/:id", update)
+// .put("/:id/photo", upload, updatePhoto)
 
 module.exports = router;

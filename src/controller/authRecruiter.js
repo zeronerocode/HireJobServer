@@ -1,10 +1,14 @@
 // require("dotenv").config();
 const createError = require("http-errors");
-const { getRecruiterByEmail, create } = require("../models/recruiterModel");
+const {
+  getRecruiterByEmail,
+  create,
+  deleteRecruiter,
+} = require("../models/recruiterModel");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
-// const jwt = require("jsonwebtoken");
-const { sendEmail } = require("../helper/mail");
+const jwt = require("jsonwebtoken");
+// const { sendEmail } = require("../helper/mail");
 const errorServ = new createError.InternalServerError();
 const helper = require("../helper/response");
 const authRecruiter = require("../helper/auth_recruiter");
@@ -39,7 +43,7 @@ const register = async (req, res, next) => {
       return next(createError(403, "password not match"));
     } else {
       await create(setData);
-      sendEmail(email);
+      // sendEmail(email);
       helper.response(res, null, 201, "you are successfully registered");
     }
   } catch (error) {
@@ -83,6 +87,37 @@ const login = async (req, res, next) => {
     recruiters.refreshToken = authRecruiter.generateRefreshToken(payload);
     helper.response(res, recruiters, 200, "you are successfully logged in");
   } catch (error) {
+    // console.log(error);
+    next(errorServ);
+  }
+};
+
+const refreshToken = async (req, res, next) => {
+  try {
+    const refreshToken = req.body.refreshToken;
+    const decoded = jwt.verify(refreshToken, process.env.SECRET_KEY);
+    const payload = {
+      email: decoded.email,
+      role: decoded.role,
+    };
+    const result = {
+      token: authRecruiter.generateToken(payload),
+      refreshToken: authRecruiter.generateRefreshToken(payload),
+    };
+    // console.log(result);
+    helper.response(res, result, 200);
+  } catch (error) {
+    console.log(error);
+    next(errorServ);
+  }
+};
+
+const deleteRec = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await deleteRecruiter(id);
+    helper.response(res, null, 200, "you are successfully deleted");
+  } catch (error) {
     console.log(error);
     next(errorServ);
   }
@@ -91,4 +126,6 @@ const login = async (req, res, next) => {
 module.exports = {
   register,
   login,
+  deleteRec,
+  refreshToken,
 };

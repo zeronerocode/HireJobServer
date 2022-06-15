@@ -11,7 +11,7 @@ const protect = (req, res, next) => {
 
       let decoded = jwt.verify(token, process.env.SECRET_KEY);
       // let decoded = jwt.verify(token, 'dsfasdfsdaf');
-      // console.log(decoded);
+      console.log(decoded);
       req.decoded = decoded;
       next();
     } else {
@@ -30,10 +30,16 @@ const protect = (req, res, next) => {
   }
 };
 const isRecruiter = (req, res, next) => {
-  if (req.decoded.role !== "Recruiter") {
-    return next(createError(400, "Recruiter only"));
+  try {
+    if (req.decoded.recruiters.role === "recruiter") {
+      next();
+    } else {
+      next(createError(400, "you are not recruiter"));
+    }
+  } catch (error) {
+    console.log(error);
+    next(createError(400, "you are not recruiter"));
   }
-  next();
 };
 module.exports = {
   protect,
