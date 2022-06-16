@@ -38,6 +38,13 @@ CREATE TABLE recruiters (
     roles VARCHAR(10) DEFAULT 'recruiter',
     hp VARCHAR(14) ,
     password VARCHAR(128),
+    role VARCHAR(10),
+    recStatus VARCHAR(20),
+    img_recruiter VARCHAR (200),
+    corps_description text,
+    instagram VARCHAR (200),
+    linkedin VARCHAR(200),
+    address VARCHAR(200),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP
 );

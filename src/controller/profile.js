@@ -51,7 +51,7 @@ const getExperience = async (req, res, next) => {
     try {
         const id = req.decoded.id;
         const result = await getExperienceData(id);
-        response(res, result, 200, "get data experience");
+        response(res, result.rows, 200, "get data experience");
     } catch (error) {
         console.log(error);
         next(errorServ);
@@ -98,7 +98,7 @@ const getSkill = async (req, res, next) => {
     try {
         const id = req.decoded.id;
         const result = await getSkillData(id);
-        response(res, result, 200, "get data experience");
+        response(res, result.rows, 200, "get data experience");
     } catch (error) {
         console.log(error);
         next(errorServ);
@@ -109,7 +109,7 @@ const getPortofolio = async (req, res, next) => {
     try {
         const id = req.decoded.id;
         const result = await getPortofolioData(id);
-        response(res, result, 200, "get data portofolio");
+        response(res, result.rows, 200, "get data portofolio");
     } catch (error) {
         console.log(error);
         next(errorServ);
@@ -190,7 +190,7 @@ const deleteSkill = async (req, res, next) => {
     try {
         delSkill(id);
 
-        response(res, id, 200, "delete portofolio success");
+        response(res, id, 200, "delete skill success");
     } catch (error) {
         console.log(error);
         next(errorServ);
