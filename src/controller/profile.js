@@ -16,7 +16,7 @@ const insertProfile = async (req, res, next) => {
     try {
         const { jobdesk = null, address = null, workplace = null, description = null, full_name = null } = req.body;
 
-        console.log(req.body)
+        console.log(`datanya body: ${req.body}`)
 
         const id = req.decoded.id;
         const data = {
