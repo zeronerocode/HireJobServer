@@ -25,14 +25,14 @@ app.use(morgan("dev"));
 app.use("img", express.static(path.join(__dirname, "./uploads")));
 app.use("/v1", routeNavigation);
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Request-With, Content-Type, Accept, Authorization"
-  );
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Request-With, Content-Type, Accept, Authorization"
+//   );
+//   next();
+// });
 
 app.all("*", (req, res, next) => {
   next(new createError.NotFound());
