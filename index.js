@@ -13,8 +13,14 @@ const port = process.env.PORT || 5001;
 
 const routeNavigation = require("./src/routeNavigation");
 
-// app.use(helmet())
-
+app.use(helmet());
+// app.use(
+//   helmet({
+//     crossOriginResourcePolicy: false,
+//   })
+// );
+app.use(cors());
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -33,7 +39,11 @@ app.use("img", express.static(path.join(__dirname, "./uploads")));
 //     "Origin, X-Request-With, Content-Type, Accept, Authorization"
 //   );
 //   next();
+<<<<<<< HEAD
 // })
+=======
+// });
+>>>>>>> 003dfc302d90f372f08b60f2d128ff54017c7e67
 
 app.all("*", (req, res, next) => {
   next(new createError.NotFound());
