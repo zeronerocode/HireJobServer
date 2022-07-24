@@ -8,31 +8,30 @@ const insertProfile = async (req, res, next) => {
     
     if(req.file) {
         photo = req.file.path
-    } else {
-        photo = null
     }
     // console.log(req.file.path)
 
     try {
-        const { jobdesk = null, address = null, workplace = null, description = null, full_name = null } = req.body;
+        // const { jobdesk = null, address = null, workplace = null, description = null, full_name = null } = req.body;
+        // const { jobdesk = null, address = null, workplace = null, description = null, full_name = null } = req.body;
 
-        console.log(`datanya body: ${req.body}`)
+        console.log(req.body)
 
-        const id = req.decoded.id;
-        const data = {
-            full_name,
-            jobdesk,
-            address,
-            workplace,
-            photo,
-            description,
-            updatedAt: new Date()
-        };
+        const id = req.decoded.id
+        // const data = {
+        //     full_name,
+        //     jobdesk,
+        //     address,
+        //     workplace,
+        //     photo,
+        //     description,
+        //     updatedAt: new Date()
+        // };
 
         // console.log(data)
 
-        await setProfile(data, id);
-        response(res, data, 201, "insert profile successfully");
+        // await setProfile(data, id);
+        response(res, req.body, 201, "insert profile successfully");
 
     } catch (error) {
         console.log(error);
