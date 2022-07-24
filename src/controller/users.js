@@ -60,7 +60,7 @@ const login = async (req, res, next) => {
       photo: user.photo,
       description: user.description
     };
-    
+
     // generate token
     user.token = authHelper.generateToken(payload);
     user.refreshToken = authHelper.gerateRefreshToken(payload);
@@ -72,16 +72,37 @@ const login = async (req, res, next) => {
   }
 };
 
+const getProfile = (req, res, next) => {
+  const email = req.decoded.email
+
+  try {
+    const { rows: [user] } = await findEmail(email)
+
+    if (user === undefined) {
+      res.json({
+        message: 'invalid token'
+      })
+      return
+    }
+
+    delete user.password
+    response(res, user, 200, 'Get Data success')
+  } catch (error) {
+    console.log(error);
+    next(new createError.InternalServerError())
+  }
+}
+
 const delUser = (req, res, next) => {
   const email = req.params.email;
   deleteUser(email)
-  .then(() => {
-    response(res, email, 201, "User Deleted");
-  })
-  .catch((error) => {
-    console.log(error);
-    next(new createError.InternalServerError());
-  });
+    .then(() => {
+      response(res, email, 201, "User Deleted");
+    })
+    .catch((error) => {
+      console.log(error);
+      next(new createError.InternalServerError());
+    });
 };
 
 const refreshToken = (req, res) => {
@@ -99,6 +120,7 @@ const refreshToken = (req, res) => {
 module.exports = {
   register,
   login,
+  getProfile,
   delUser,
   refreshToken
 };
