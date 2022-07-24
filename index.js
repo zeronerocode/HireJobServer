@@ -19,7 +19,15 @@ app.use(helmet())
 //     crossOriginResourcePolicy: false,
 //   })
 // );
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  // credentials: true,
+  // origin: ['http://localhost:3000', 'https://recipedia-ashen.vercel.app', 'https://pijarnext-fwzfrds.vercel.app/']
+  origin: [
+    // 'https://pijarnext-fwzfrds.vercel.app',
+    'http://localhost:3000'
+  ]
+}))
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
