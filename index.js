@@ -12,11 +12,12 @@ const port = process.env.PORT || 5001;
 const app = express();
 const routeNavigation = require("./src/routeNavigation");
 
-app.use(
-  helmet({
-    crossOriginResourcePolicy: false,
-  })
-);
+app.use(helmet());
+// app.use(
+//   helmet({
+//     crossOriginResourcePolicy: false,
+//   })
+// );
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
