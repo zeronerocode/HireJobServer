@@ -15,9 +15,10 @@ const insertProfile = async (req, res, next) => {
         // const { jobdesk = null, address = null, workplace = null, description = null, full_name = null } = req.body;
         // const { jobdesk = null, address = null, workplace = null, description = null, full_name = null } = req.body;
 
-        console.log(req.body)
+        // console.log(req.body)
 
         const id = req.decoded.id
+        const data = req.body
         // const data = {
         //     full_name,
         //     jobdesk,
@@ -28,10 +29,10 @@ const insertProfile = async (req, res, next) => {
         //     updatedAt: new Date()
         // };
 
-        // console.log(data)
+        console.log(data)
 
-        // await setProfile(data, id);
-        response(res, req.body, 201, "insert profile successfully");
+        await setProfile(data, id);
+        response(res, data, 201, "insert profile successfully");
 
     } catch (error) {
         console.log(error);
