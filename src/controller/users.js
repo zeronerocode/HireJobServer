@@ -72,7 +72,7 @@ const login = async (req, res, next) => {
   }
 };
 
-const getProfile = (req, res, next) => {
+const getProfile = async (req, res, next) => {
   const email = req.decoded.email
 
   try {
