@@ -32,7 +32,7 @@ const sendEmail = async (email) => {
       expiresIn: "1h",
     });
     const mailOptions = {
-      from: "Nocturnal <hasbipijarcamp@gmail.com>",
+      from: "Hire Job | Peworld",
       to: email,
       subject: "Verify your email",
       html: `<h1>Verify your email</h1>
