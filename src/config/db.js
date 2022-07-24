@@ -7,8 +7,8 @@ const pool = new Pool({
   database: process.env.DB_NAME,
   ssl: {
     rejectUnauthorized: false,
-}
-})
+  }
+});
 
 pool.connect((err) => {
   if (err) {

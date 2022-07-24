@@ -1,5 +1,7 @@
-const express = require("express");
 require("dotenv").config();
+
+const express = require("express");
+const app = express();
 
 const helmet = require("helmet");
 const cors = require("cors");
@@ -9,21 +11,20 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const port = process.env.PORT || 5001;
 
-const app = express();
 const routeNavigation = require("./src/routeNavigation");
 
 // app.use(helmet())
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan("dev"));
 app.use(
   helmet({
     crossOriginResourcePolicy: false,
   })
-)
+);
 app.use("/v1", routeNavigation);
 app.use("img", express.static(path.join(__dirname, "./uploads")));
 
