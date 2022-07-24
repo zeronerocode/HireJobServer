@@ -8,7 +8,8 @@ const pool = new Pool({
   ssl: {
     rejectUnauthorized: false,
 }
-});
+})
+
 pool.connect((err) => {
   if (err) {
     console.log("Database not connected");
