@@ -5,6 +5,9 @@ const errorServ = new createError.InternalServerError();
 
 const insertProfile = async (req, res, next) => {
 
+    // const photo = req.file.path
+    console.log(req.file.path)
+
     try {
         const { jobdesk, address, workplace, description,full_name } = req.body;
 
@@ -14,7 +17,7 @@ const insertProfile = async (req, res, next) => {
             jobdesk,
             address,
             workplace,
-            photo: req.file.path || undefined,
+            // photo: req.file.path || undefined,
             description,
             updatedAt: new Date()
         };
