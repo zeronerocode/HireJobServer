@@ -12,22 +12,22 @@ const insertProfile = async (req, res, next) => {
     // console.log(req.file.path)
 
     try {
-        // const { jobdesk = null, address = null, workplace = null, description = null, full_name = null } = req.body;
+        const { jobdesk, address, workplace, description, full_name } = req.body;
         // const { jobdesk = null, address = null, workplace = null, description = null, full_name = null } = req.body;
 
         // console.log(req.body)
 
         const id = req.decoded.id
-        const data = req.body
-        // const data = {
-        //     full_name,
-        //     jobdesk,
-        //     address,
-        //     workplace,
-        //     photo,
-        //     description,
-        //     updatedAt: new Date()
-        // };
+
+        const data = {
+            full_name,
+            jobdesk,
+            address,
+            workplace,
+            photo,
+            description,
+            updatedAt: new Date()
+        };
 
         console.log(data)
 

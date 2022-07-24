@@ -7,7 +7,7 @@ const {protect} = require("../middleware/auth");
 
 
 router
-  .patch("/", protect, upload.single("photo"), insertProfile)
+  .put("/", protect, upload.single("photo"), insertProfile)
   .post("/experience",protect, insertExperience)
   .post("/portofolio",protect, upload.single("appImage"), insertPortofolio)
   .post("/skill",protect,insertSkill)

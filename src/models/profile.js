@@ -2,7 +2,14 @@ const pool = require("../config/db");
 
 const setProfile = ({ jobdesk, address, workplace, photo, description, updatedAt, full_name }, id) => {
     return new Promise((resolve, reject) => {
-        pool.query("UPDATE users SET full_name=$8, jobdesk=$2, address=$3, workplace=$4, photo=$5, description=$6, updated_at=$7 WHERE id = $1",
+        pool.query(`UPDATE users SET 
+        full_name=COALESCE($8, full_name), 
+        jobdesk=COALESCE($2, jobdesk), 
+        address=COALESCE($3, address), 
+        workplace=COALESCE($4, workplace), 
+        photo=COALESCE($5, photo), 
+        description=COALESCE($6, description), 
+        updated_at=COALESCE($7, updated_at) WHERE id = $1`,
             [id, jobdesk, address, workplace, photo, description, updatedAt, full_name],
             (error, result) => {
                 if (!error) {
