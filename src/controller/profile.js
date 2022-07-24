@@ -4,9 +4,12 @@ const { response } = require("../helper/response");
 const errorServ = new createError.InternalServerError();
 
 const insertProfile = async (req, res, next) => {
-
-    // const photo = req.file.path
-    console.log(req.file.path)
+    let photo
+    
+    if(req.file) {
+        photo = req.file.path
+    }
+    // console.log(req.file.path)
 
     try {
         const { jobdesk, address, workplace, description,full_name } = req.body;
@@ -17,10 +20,12 @@ const insertProfile = async (req, res, next) => {
             jobdesk,
             address,
             workplace,
-            // photo: req.file.path || undefined,
+            photo,
             description,
             updatedAt: new Date()
         };
+
+        console.log(data)
 
         await setProfile(data, id);
         response(res, data, 201, "insert profile successfully");
