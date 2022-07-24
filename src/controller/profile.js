@@ -8,11 +8,15 @@ const insertProfile = async (req, res, next) => {
     
     if(req.file) {
         photo = req.file.path
+    } else {
+        photo = null
     }
     // console.log(req.file.path)
 
     try {
-        const { jobdesk, address, workplace, description,full_name } = req.body;
+        const { jobdesk = null, address = null, workplace = null, description = null, full_name = null } = req.body;
+
+        console.log(req.body)
 
         const id = req.decoded.id;
         const data = {
@@ -25,7 +29,7 @@ const insertProfile = async (req, res, next) => {
             updatedAt: new Date()
         };
 
-        console.log(data)
+        // console.log(data)
 
         await setProfile(data, id);
         response(res, data, 201, "insert profile successfully");
