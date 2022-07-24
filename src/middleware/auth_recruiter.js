@@ -1,8 +1,6 @@
-const createError = require("http-errors");
-
 const jwt = require("jsonwebtoken");
-
-const protect = async (req, res, next) => {
+const createError = require("http-errors");
+const protect = (req, res, next) => {
   try {
     let token;
     if (
@@ -11,7 +9,9 @@ const protect = async (req, res, next) => {
     ) {
       token = req.headers.authorization.split(" ")[1];
 
-      const decoded = jwt.verify(token, process.env.SECRET_KEY_JWT);
+      let decoded = jwt.verify(token, process.env.SECRET_KEY);
+      // let decoded = jwt.verify(token, 'dsfasdfsdaf');
+      console.log(decoded);
       req.decoded = decoded;
       next();
     } else {
@@ -29,21 +29,19 @@ const protect = async (req, res, next) => {
     }
   }
 };
-
-const generateToken = (payload) => {
-  const verifyOpts = {
-    expiresIn: "1h"
-  };
-  const token = jwt.sign(payload, process.env.SECRET_KEY_JWT, verifyOpts);
-  return token;
+const isRecruiter = (req, res, next) => {
+  try {
+    if (req.decoded.recruiters.role === "recruiter") {
+      next();
+    } else {
+      next(createError(400, "you are not recruiter"));
+    }
+  } catch (error) {
+    console.log(error);
+    next(createError(400, "you are not recruiter"));
+  }
 };
-
-const gerateRefreshToken = (payload) => {
-  const verifyOpts = {
-    expiresIn: "1 day"
-  };
-  const token = jwt.sign(payload, process.env.SECRET_KEY_JWT, verifyOpts);
-  return token;
+module.exports = {
+  protect,
+  isRecruiter,
 };
-
-module.exports = { generateToken, gerateRefreshToken, protect };

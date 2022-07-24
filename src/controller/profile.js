@@ -1,14 +1,15 @@
 const createError = require("http-errors");
-const { setProfile, setExperience, setPortofolio, setSkill, getExperienceData, getSkillData, getPortofolioData } = require("../models/profile");
+const { setProfile, setExperience, setPortofolio, setSkill, getExperienceData, getSkillData, getPortofolioData, countUser, select, delExperience, delPortofolio, delSkill } = require("../models/profile");
 const { response } = require("../helper/response");
 const errorServ = new createError.InternalServerError();
 
 const insertProfile = async (req, res, next) => {
     try {
-        const { jobdesk, address, workplace, description } = req.body;
+        const { jobdesk, address, workplace, description,full_name } = req.body;
 
         const id = req.decoded.id;
         const data = {
+            full_name,
             jobdesk,
             address,
             workplace,
@@ -46,15 +47,15 @@ const insertExperience = async (req, res, next) => {
     }
 };
 
-const getExperience = async(req, res, next) => {
+const getExperience = async (req, res, next) => {
     try {
         const id = req.decoded.id;
         const result = await getExperienceData(id);
-        response(res, result, 200, "get data experience");
-      } catch (error) {
+        response(res, result.rows, 200, "get data experience");
+    } catch (error) {
         console.log(error);
         next(errorServ);
-      }
+    }
 };
 
 const insertPortofolio = async (req, res, next) => {
@@ -93,26 +94,107 @@ const insertSkill = async (req, res, next) => {
     }
 };
 
-const getSkill = async(req, res, next) => {
+const getSkill = async (req, res, next) => {
     try {
         const id = req.decoded.id;
         const result = await getSkillData(id);
-        response(res, result, 200, "get data experience");
-      } catch (error) {
+        response(res, result.rows, 200, "get data experience");
+    } catch (error) {
         console.log(error);
         next(errorServ);
-      }
+    }
 };
 
-const getPortofolio = async(req, res, next) => {
+const getPortofolio = async (req, res, next) => {
     try {
         const id = req.decoded.id;
         const result = await getPortofolioData(id);
-        response(res, result, 200, "get data portofolio");
-      } catch (error) {
+        response(res, result.rows, 200, "get data portofolio");
+    } catch (error) {
         console.log(error);
         next(errorServ);
-      }
+    }
+};
+
+const getUsers = async (req, res, next) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        let limit = parseInt(req.query.limit) || 4;
+        const offset = (page - 1) * limit;
+        const sortBy = req.query.sortby || "id";
+        const sortOrder = req.query.sortorder || "asc";
+        const search = req.query.search || "";
+
+        const result = await select({ limit, offset, sortBy, sortOrder, search });
+
+        const { rows: [count] } = await countUser();
+        const totalData = search === "" ? parseInt(count.total) : (result.rows).length;
+
+        if (totalData < limit) {
+            limit = totalData;
+        }
+
+        if ((result.rows).length === 0) {
+            response(res, 404, "Data not found");
+        }
+
+        const totalPage = Math.ceil(totalData / limit);
+        const pagination = {
+            currentPage: page,
+            dataPerPage: limit,
+            totalData,
+            totalPage
+        };
+
+        for (let i = 0; i < totalData; i++) {
+            // console.log(result.rows[i].user_password)
+            delete result.rows[i].user_password;
+        }
+
+        response(res, result.rows, 200, "Get data success", pagination);
+    } catch (error) {
+        console.log(error);
+        next(errorServ);
+    }
+};
+
+const deleteExperience = async (req, res, next) => {
+    const id = req.params.id;
+
+    try {
+
+        delExperience(id);
+
+        response(res, id, 200, "Delete data success");
+    } catch (error) {
+        console.log(error);
+        next(errorServ);
+    }
+};
+
+const deletePortofolio = async (req, res, next) => {
+    const id = req.params.id;
+
+    try {
+        delPortofolio(id);
+
+        response(res, id, 200, "delete portofolio success");
+    } catch (error) {
+        console.log(error);
+        next(errorServ);
+    }
+};
+const deleteSkill = async (req, res, next) => {
+    const id = req.params.id;
+
+    try {
+        delSkill(id);
+
+        response(res, id, 200, "delete skill success");
+    } catch (error) {
+        console.log(error);
+        next(errorServ);
+    }
 };
 
 module.exports = {
@@ -122,5 +204,9 @@ module.exports = {
     insertPortofolio,
     insertSkill,
     getSkill,
-    getPortofolio
+    getPortofolio,
+    getUsers,
+    deleteExperience,
+    deletePortofolio,
+    deleteSkill
 };
