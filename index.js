@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 require("dotenv").config();
 
 const express = require("express");
@@ -28,7 +29,7 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(helmet({
   crossOriginResourcePolicy: false
-}))
+}));
 app.use("/v1", routeNavigation);
 app.use("img", express.static(path.join(__dirname, "./uploads")));
 
@@ -39,11 +40,7 @@ app.use("img", express.static(path.join(__dirname, "./uploads")));
 //     "Origin, X-Request-With, Content-Type, Accept, Authorization"
 //   );
 //   next();
-<<<<<<< HEAD
 // })
-=======
-// });
->>>>>>> 003dfc302d90f372f08b60f2d128ff54017c7e67
 
 app.all("*", (req, res, next) => {
   next(new createError.NotFound());
