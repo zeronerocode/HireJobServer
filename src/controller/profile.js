@@ -119,6 +119,17 @@ const getSkill = async (req, res, next) => {
     }
 };
 
+const getSkillById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const result = await getSkillData(id);
+        response(res, result.rows, 200, "get data skill success");
+    } catch (error) {
+        console.log(error);
+        next(errorServ);
+    }
+};
+
 const getPortofolio = async (req, res, next) => {
     try {
         const id = req.decoded.id;
@@ -222,6 +233,7 @@ module.exports = {
     insertPortofolio,
     insertSkill,
     getSkill,
+    getSkillById,
     getPortofolio,
     getUsers,
     deleteExperience,
