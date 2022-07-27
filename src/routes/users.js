@@ -7,7 +7,7 @@ router
   .post("/register", register)
   .post("/login", login)
   .get("/profile", protect, getProfile)
-  .get("/profile/:id", protect, getProfileById);
+  .get("/profile/:id", getProfileById);
 //   .post("/refresh-token", refreshToken)
 //   .delete("/:id", delUser);
 
