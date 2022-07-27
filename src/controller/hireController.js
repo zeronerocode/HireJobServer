@@ -19,9 +19,9 @@ const addHiring = async (req, res, next) => {
             purpose
         };
 
-        // await addHire(dataHire);
+        await addHire(dataHire);
         console.log(dataHire);
-        
+
         response(res, dataHire, 201, "add hire successful");
     } catch (error) {
         console.log(error);
