@@ -94,7 +94,7 @@ const getProfile = async (req, res, next) => {
 };
 
 const getProfileById = async (req, res, next) => {
-  const {id} = req.body;
+  const {id} = req.params;
 
   try {
     const { rows: [user] } = await findById(id);
