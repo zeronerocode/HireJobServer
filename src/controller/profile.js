@@ -160,8 +160,6 @@ const getUsers = async (req, res, next) => {
             totalPage
         };
 
-        console.log(result.rows)
-
         (result.rows).forEach((user) => {
             delete user.password
         })

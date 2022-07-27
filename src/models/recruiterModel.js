@@ -1,7 +1,6 @@
 const pool = require("../config/db");
 
 const getRecruiterByEmail = async (email) => {
-  console.log(email)
   return new Promise((resolve, reject) => {
     pool.query(
       "SELECT * FROM recruiters WHERE email = $1",
