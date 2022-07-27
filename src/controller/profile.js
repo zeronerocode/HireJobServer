@@ -71,6 +71,17 @@ const getExperience = async (req, res, next) => {
     }
 };
 
+const getExpeById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const result = await getExperienceData(id);
+        response(res, result.rows, 200, "get data experience");
+    } catch (error) {
+        console.log(error);
+        next(errorServ);
+    }
+};
+
 const insertPortofolio = async (req, res, next) => {
 
     try {
@@ -230,6 +241,7 @@ module.exports = {
     insertProfile,
     insertExperience,
     getExperience,
+    getExpeById,
     insertPortofolio,
     insertSkill,
     getSkill,

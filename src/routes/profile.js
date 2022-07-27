@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { insertProfile, insertExperience, insertPortofolio, insertSkill, getExperience, getSkill, getPortofolio, getUsers, deletePortofolio, deleteExperience, deleteSkill, getSkillById} = require("../controller/profile.js");
+const { insertProfile, insertExperience, insertPortofolio, insertSkill, getExperience, getSkill, getPortofolio, getUsers, deletePortofolio, deleteExperience, deleteSkill, getSkillById, getExpeById} = require("../controller/profile.js");
 const upload = require("../middleware/multer");
 const {protect} = require("../middleware/auth");
 
@@ -10,7 +10,7 @@ router
   .post("/portofolio",protect, upload.single("appImage"), insertPortofolio)
   .post("/skill",protect,insertSkill)
   .get("/experience",protect,getExperience)
-  .get("/experience/:id",getExperience)
+  .get("/experience/:id",getExpeById)
   .get("/skill",protect,getSkill)
   .get("/skill/:id",getSkillById)
   .get("/portofolio",protect,getPortofolio)
