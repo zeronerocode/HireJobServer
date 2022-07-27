@@ -54,6 +54,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
+    console.log('logged in...')
     const { email, password } = req.body;
     const {
       rows: [recruiters],
