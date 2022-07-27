@@ -4,10 +4,10 @@ const { response } = require("../helper/response");
 const errorServ = new createError.InternalServerError();
 
 const insertProfile = async (req, res, next) => {
-    let photo
+    let photo;
     
     if(req.file) {
-        photo = req.file.path
+        photo = req.file.path;
     }
     // console.log(req.file.path)
 
@@ -17,7 +17,7 @@ const insertProfile = async (req, res, next) => {
 
         // console.log(req.body)
 
-        const id = req.decoded.id
+        const id = req.decoded.id;
 
         const data = {
             full_name,
@@ -29,7 +29,7 @@ const insertProfile = async (req, res, next) => {
             updatedAt: new Date()
         };
 
-        console.log(data)
+        console.log(data);
 
         await setProfile(data, id);
         response(res, data, 201, "insert profile successfully");
@@ -161,8 +161,8 @@ const getUsers = async (req, res, next) => {
         };
 
         (result.rows).forEach((user) => {
-            delete user.password
-        })
+            delete user.password;
+        });
 
         // for (let i = 0; i < totalData; i++) {
         //     // console.log(result.rows[i].user_password)
