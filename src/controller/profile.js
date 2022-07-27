@@ -152,6 +152,17 @@ const getPortofolio = async (req, res, next) => {
     }
 };
 
+const getPortofolioById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const result = await getPortofolioData(id);
+        response(res, result.rows, 200, "get data portofolio");
+    } catch (error) {
+        console.log(error);
+        next(errorServ);
+    }
+};
+
 const getUsers = async (req, res, next) => {
     try {
         const page = parseInt(req.query.page) || 1;
@@ -247,6 +258,7 @@ module.exports = {
     getSkill,
     getSkillById,
     getPortofolio,
+    getPortofolioById,
     getUsers,
     deleteExperience,
     deletePortofolio,
