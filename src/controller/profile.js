@@ -160,9 +160,11 @@ const getUsers = async (req, res, next) => {
             totalPage
         };
 
+        console.log(result.rows)
+
         for (let i = 0; i < totalData; i++) {
             // console.log(result.rows[i].user_password)
-            delete result.rows[i].user_password;
+            delete result.rows[i].password;
         }
 
         response(res, result.rows, 200, "Get data success", pagination);
