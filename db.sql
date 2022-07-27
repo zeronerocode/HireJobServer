@@ -20,15 +20,17 @@ CREATE TABLE IF NOT EXISTS portofolio
     user_id VARCHAR(200) 
 );
 
-CREATE TABLE IF NOT EXISTS offering
+CREATE TABLE IF NOT EXISTS hiring
 (
     id INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    id_recruiter VARCHAR(200),
-    id_jobseeker VARCHAR(200),
-    link_repo VARCHAR(200) ,
-    app_type VARCHAR(200) ,
-    app_image VARCHAR(200) ,
-    user_id VARCHAR(200) 
+    id_jobseeker VARCHAR(200) NOT NULL,
+    rec_id VARCHAR(200) NOT NULL,
+    rec_name VARCHAR(200),
+    rec_email VARCHAR(200),
+    rec_phone VARCHAR(200),
+    message TEXT,
+    purpose TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
