@@ -162,10 +162,14 @@ const getUsers = async (req, res, next) => {
 
         console.log(result.rows)
 
-        for (let i = 0; i < totalData; i++) {
-            // console.log(result.rows[i].user_password)
-            delete result.rows[i].password;
-        }
+        (result.rows).forEach((user) => {
+            delete user.password
+        })
+
+        // for (let i = 0; i < totalData; i++) {
+        //     // console.log(result.rows[i].user_password)
+        //     delete result.rows[i].password;
+        // }
 
         response(res, result.rows, 200, "Get data success", pagination);
     } catch (error) {
