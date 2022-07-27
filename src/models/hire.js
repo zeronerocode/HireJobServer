@@ -12,6 +12,19 @@ const addHire = ({ id, idJobseeker, idRecruiter, recName, recEmail, recPhone, me
     });
 };
 
+const getHireList = (id) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT * FROM hiring WHERE id_jobseeker = ${id};`, (err, result) => {
+            if (!err) {
+                resolve(result);
+            } else {
+                reject(new Error(err));
+            }
+        });
+    });
+};
+
 module.exports = {
-    addHire
+    addHire,
+    getHireList
 };
