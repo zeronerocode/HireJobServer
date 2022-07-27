@@ -4,8 +4,6 @@ const { insertProfile, insertExperience, insertPortofolio, insertSkill, getExper
 const upload = require("../middleware/multer");
 const {protect} = require("../middleware/auth");
 
-
-
 router
   .put("/", protect, upload.single("photo"), insertProfile)
   .post("/experience",protect, insertExperience)
