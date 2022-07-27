@@ -32,7 +32,7 @@ const addHiring = async (req, res, next) => {
 const getHire = async (req, res, next) => {
     try {
         const id = req.decoded.id;
-        const result = await getHireList(`${id}`);
+        const result = await getHireList(`'${id}'`);
         response(res, result.rows, 200, "get hire data success");
     } catch (error) {
         console.log(error);
