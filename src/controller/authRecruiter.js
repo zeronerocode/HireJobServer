@@ -88,7 +88,7 @@ const login = async (req, res, next) => {
     recruiters.refreshToken = authRecruiter.generateRefreshToken(payload);
     helper.response(res, recruiters, 200, "you are successfully logged in");
   } catch (error) {
-    // console.log(error);
+    console.log(error)
     next(errorServ);
   }
 };
