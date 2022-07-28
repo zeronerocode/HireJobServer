@@ -149,7 +149,9 @@ const activation = async (req, res, next) => {
     const { rowCount: user } = await checkIdUser(strId);
     console.log(user);
     await activate(id);
-    res.redirect("");
+
+    res.redirect("https://hirejob-fe.vercel.app/jobseeker/login");
+    response(res, {data: "activated"}, 200, "Congrats ! your account has been activated");
   } catch (error) {
     console.log(error);
     next(createError[500]("Something Wrong"));
