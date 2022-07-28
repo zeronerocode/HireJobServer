@@ -8,7 +8,7 @@ const {
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
-// const { sendEmail } = require("../helper/mail");
+const { sendMail } = require("../helper/mail");
 const errorServ = new createError.InternalServerError();
 const helper = require("../helper/response");
 const authRecruiter = require("../helper/auth_recruiter");
@@ -43,7 +43,7 @@ const register = async (req, res, next) => {
       return next(createError(403, "password not match"));
     } else {
       await create(setData);
-      // sendEmail(email);
+      sendMail(email);
       helper.response(res, null, 201, "you are successfully registered");
     }
   } catch (error) {
@@ -54,7 +54,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    console.log('logged in...')
+    console.log("logged in...");
     const { email, password } = req.body;
     const {
       rows: [recruiters],
@@ -88,7 +88,7 @@ const login = async (req, res, next) => {
     recruiters.refreshToken = authRecruiter.generateRefreshToken(payload);
     helper.response(res, recruiters, 200, "you are successfully logged in");
   } catch (error) {
-    console.log(error)
+    console.log(error);
     next(errorServ);
   }
 };

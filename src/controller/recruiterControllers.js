@@ -6,6 +6,7 @@ const {
   update,
   getList,
   countAll,
+  activate
 } = require("../models/recruiterModel");
 // const jwt = require("jsonwebtoken");
 // const { sendEmail } = require("../helper/mail");
@@ -120,9 +121,25 @@ const getRecById = async (req, res, next) => {
   }
 };
 
+const recActivate = async (req, res, next) => {
+  try {
+    const emailID = req.decoded.email;
+    console.log(emailID);
+
+    await activate(emailID);
+
+    res.redirect("https://hirejob-fe.vercel.app/recruiter/login");
+    helper.response(res, {data: "activated"}, 200, "Congrats ! your account has been activated");
+  } catch (error) {
+    console.log(error);
+    next(new createError.InternalServerError());
+  }
+};
+
 module.exports = {
   profile,
   updateProfile,
   list,
   getRecById,
+  recActivate
 };

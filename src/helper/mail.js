@@ -14,7 +14,7 @@ const oAuth2Client = new google.auth.OAuth2(
   REDIRECT_URL
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-const sendEmail = async (email) => {
+const sendMail = async (email) => {
   try {
     const accessToken = await oAuth2Client.getAccessToken();
     const transport = nodemailer.createTransport({
@@ -29,7 +29,7 @@ const sendEmail = async (email) => {
       },
     });
     const token = jwt.sign({ email }, process.env.SECRET_KEY, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
     const mailOptions = {
       from: "Hire Job | Peworld",
@@ -37,7 +37,7 @@ const sendEmail = async (email) => {
       subject: "Verify your email",
       html: `<h1>Verify your email</h1>
       <p>Please click the link below to verify your email</p>
-      <a href="http://localhost:5000/recruiter/verify/${token}">Verify</a>`,
+      <a href="https://hire-job-server.herokuapp.com/v1/recruiter/verify/${token}">Verify</a>`,
     };
     await transport.sendMail(mailOptions);
   } catch (error) {
@@ -45,4 +45,4 @@ const sendEmail = async (email) => {
   }
 };
 // sendEmail("hasbialwi70@gmail.com");
-module.exports = { sendEmail };
+module.exports = { sendMail };

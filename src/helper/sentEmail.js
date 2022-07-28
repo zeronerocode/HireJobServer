@@ -1,26 +1,26 @@
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 
-const sendEmail = async(data)=>{
+const sendEmail = async (data) => {
     try {
-    let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,// true for 465, false for other ports
-        auth: {
-          user: "avtur.team@gmail.com", // generated ethereal user
-          pass: "nkbkkjrehqcjjxln", // generated ethereal password
-        },
-      });
-      const token = jwt.sign(data, process.env.SECRET_KEY_JWT, {
-        // expiresIn: "3600",
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,// true for 465, false for other ports
+            auth: {
+                user: "avtur.team@gmail.com", // generated ethereal user
+                pass: "nkbkkjrehqcjjxln", // generated ethereal password
+            },
         });
-      // send mail with defined transport object
-      let info = await transporter.sendMail({
-        from: "'Ankasa Ticketing' <avtur.team@gmail.com>", // sender address
-        to: data.email, // list of receivers
-        subject: "Email Verification", // Subject line
-        html: `<!DOCTYPE html>
+        const token = jwt.sign(data, process.env.SECRET_KEY_JWT, {
+            expiresIn: "24h",
+        });
+        // send mail with defined transport object
+        let info = await transporter.sendMail({
+            from: "'Hire Job | Peworld'", // sender address
+            to: data.email, // list of receivers
+            subject: "Email Verification", // Subject line
+            html: `<!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
@@ -51,14 +51,14 @@ const sendEmail = async(data)=>{
         </head>
         <body>
             <div class="container">
-                <a href="http://localhost:5000/v1/users/activate/${token}/${data.id}">klik aktif</a>
+                <a href="https://hire-job-server.herokuapp.com/v1/users/activate/${token}/${data.id}">klik aktif</a>
             </div>
         </body>
         </html>`, // html body
-      });
-    
-      console.log("Message sent: %s", info.messageId);
-      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+        });
+
+        console.log("Message sent: %s", info.messageId);
+        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
     } catch (error) {
         console.log(error);
     }
@@ -70,10 +70,10 @@ const forgotPassword = async (data) => {
         port: 465,
         secure: true,// true for 465, false for other ports
         auth: {
-          user: process.env.G_ACCOUNT, // generated ethereal user
-          pass: process.env.G_PASS, // generated ethereal password
+            user: process.env.G_ACCOUNT, // generated ethereal user
+            pass: process.env.G_PASS, // generated ethereal password
         },
-      });
+    });
     const expiresIn = {
         expiresIn: "1h",
     };
@@ -87,7 +87,7 @@ const forgotPassword = async (data) => {
     console.log("Message sent: %s", info.messageId);
 };
 
-module.exports ={
+module.exports = {
     sendEmail,
     forgotPassword
 };

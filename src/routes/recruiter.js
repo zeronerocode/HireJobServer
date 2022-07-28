@@ -10,6 +10,7 @@ const {
   updateProfile,
   list,
   getRecById,
+  recActivate,
 } = require("../controller/recruiterControllers");
 // const uploads = require("../middleware/multer");
 const { protect } = require("../middleware/auth_recruiter");
@@ -27,7 +28,8 @@ router
 
   //recruiter home
   .get("/", list)
-  .get("/:id", getRecById);
+  .get("/:id", getRecById)
+  .get("/verify/:token", recActivate);
 // .get("/:id", jwtAuth, detail)
 // .put("/:id", update)
 // .put("/:id/photo", upload, updatePhoto)

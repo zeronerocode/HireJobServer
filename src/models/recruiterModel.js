@@ -135,6 +135,12 @@ const deleteRecruiter = async (id) => {
     });
   });
 };
+
+const activate = (email) => {
+  // console.log(`id ${id}`);
+  return pool.query(`UPDATE recruiters SET recstatus = verified WHERE email = '${email}'`);
+};
+
 module.exports = {
   getRecruiterByEmail,
   getRecruiterById,
@@ -143,4 +149,5 @@ module.exports = {
   getList,
   countAll,
   deleteRecruiter,
+  activate
 };
