@@ -54,6 +54,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
+    console.log('logged in...')
     const { email, password } = req.body;
     const {
       rows: [recruiters],
@@ -87,7 +88,7 @@ const login = async (req, res, next) => {
     recruiters.refreshToken = authRecruiter.generateRefreshToken(payload);
     helper.response(res, recruiters, 200, "you are successfully logged in");
   } catch (error) {
-    // console.log(error);
+    console.log(error)
     next(errorServ);
   }
 };

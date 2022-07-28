@@ -4,10 +4,10 @@ const { response } = require("../helper/response");
 const errorServ = new createError.InternalServerError();
 
 const insertProfile = async (req, res, next) => {
-    let photo
+    let photo;
     
     if(req.file) {
-        photo = req.file.path
+        photo = req.file.path;
     }
     // console.log(req.file.path)
 
@@ -17,7 +17,7 @@ const insertProfile = async (req, res, next) => {
 
         // console.log(req.body)
 
-        const id = req.decoded.id
+        const id = req.decoded.id;
 
         const data = {
             full_name,
@@ -29,7 +29,7 @@ const insertProfile = async (req, res, next) => {
             updatedAt: new Date()
         };
 
-        console.log(data)
+        console.log(data);
 
         await setProfile(data, id);
         response(res, data, 201, "insert profile successfully");
@@ -71,7 +71,19 @@ const getExperience = async (req, res, next) => {
     }
 };
 
+const getExpeById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const result = await getExperienceData(id);
+        response(res, result.rows, 200, "get data experience");
+    } catch (error) {
+        console.log(error);
+        next(errorServ);
+    }
+};
+
 const insertPortofolio = async (req, res, next) => {
+
     try {
         const { appName, linkRepo, appType } = req.body;
         const user_id = req.decoded.id;
@@ -118,9 +130,31 @@ const getSkill = async (req, res, next) => {
     }
 };
 
+const getSkillById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const result = await getSkillData(id);
+        response(res, result.rows, 200, "get data skill success");
+    } catch (error) {
+        console.log(error);
+        next(errorServ);
+    }
+};
+
 const getPortofolio = async (req, res, next) => {
     try {
         const id = req.decoded.id;
+        const result = await getPortofolioData(id);
+        response(res, result.rows, 200, "get data portofolio");
+    } catch (error) {
+        console.log(error);
+        next(errorServ);
+    }
+};
+
+const getPortofolioById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
         const result = await getPortofolioData(id);
         response(res, result.rows, 200, "get data portofolio");
     } catch (error) {
@@ -159,10 +193,14 @@ const getUsers = async (req, res, next) => {
             totalPage
         };
 
-        for (let i = 0; i < totalData; i++) {
-            // console.log(result.rows[i].user_password)
-            delete result.rows[i].user_password;
-        }
+        (result.rows).forEach((user) => {
+            delete user.password;
+        });
+
+        // for (let i = 0; i < totalData; i++) {
+        //     // console.log(result.rows[i].user_password)
+        //     delete result.rows[i].password;
+        // }
 
         response(res, result.rows, 200, "Get data success", pagination);
     } catch (error) {
@@ -214,10 +252,13 @@ module.exports = {
     insertProfile,
     insertExperience,
     getExperience,
+    getExpeById,
     insertPortofolio,
     insertSkill,
     getSkill,
+    getSkillById,
     getPortofolio,
+    getPortofolioById,
     getUsers,
     deleteExperience,
     deletePortofolio,

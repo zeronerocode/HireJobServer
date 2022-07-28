@@ -41,6 +41,8 @@ app.use("img", express.static(path.join(__dirname, "./uploads")));
 //   );
 //   next();
 // })
+// });
+
 
 app.all("*", (req, res, next) => {
   next(new createError.NotFound());
@@ -48,7 +50,7 @@ app.all("*", (req, res, next) => {
 
 app.use((err, req, res, next) => {
   const messError = err.message || "Internal Server Error";
-  const statusCode = err.status || 500;
+  const statusCode = err.status || 5000;
 
   res.status(statusCode).json({
     message: messError,

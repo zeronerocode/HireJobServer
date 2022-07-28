@@ -20,6 +20,19 @@ CREATE TABLE IF NOT EXISTS portofolio
     user_id VARCHAR(200) 
 );
 
+CREATE TABLE IF NOT EXISTS hiring
+(
+    id VARCHAR(64) NOT NULL PRIMARY KEY,
+    id_jobseeker VARCHAR(200) NOT NULL,
+    rec_id VARCHAR(200) NOT NULL,
+    rec_name VARCHAR(200),
+    rec_email VARCHAR(200),
+    rec_phone VARCHAR(200),
+    message TEXT,
+    purpose TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 CREATE TABLE skills
 (

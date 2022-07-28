@@ -1,7 +1,7 @@
 const createError = require("http-errors");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
-const { findEmail, insert, deleteUser, checkIdUser, activate } = require("../models/users");
+const { findEmail, insert, deleteUser, findById, checkIdUser, activate } = require("../models/users");
 const { response } = require("../helper/response");
 const jwt = require("jsonwebtoken");
 const authHelper = require("../middleware/auth");
@@ -78,6 +78,27 @@ const getProfile = async (req, res, next) => {
 
   try {
     const { rows: [user] } = await findEmail(email);
+    
+    if (user === undefined) {
+      res.json({
+        message: "invalid token"
+      });
+      return;
+    }
+
+    delete user.password;
+    response(res, user, 200, "Get Data success");
+  } catch (error) {
+    console.log(error);
+    next(new createError.InternalServerError());
+  }
+};
+
+const getProfileById = async (req, res, next) => {
+  const {id} = req.params;
+
+  try {
+    const { rows: [user] } = await findById(id);
 
     if (user === undefined) {
       res.json({
@@ -139,6 +160,7 @@ module.exports = {
   register,
   login,
   getProfile,
+  getProfileById,
   delUser,
   refreshToken,
   activation
