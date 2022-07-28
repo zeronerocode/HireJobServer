@@ -1,10 +1,11 @@
 const createError = require("http-errors");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
-const { findEmail, insert, deleteUser, findById } = require("../models/users");
+const { findEmail, insert, deleteUser, findById, checkIdUser, activate } = require("../models/users");
 const { response } = require("../helper/response");
 const jwt = require("jsonwebtoken");
 const authHelper = require("../middleware/auth");
+const {sendEmail} = require("../helper/sentEmail");
 
 const register = async (req, res, next) => {
   try {
@@ -26,7 +27,7 @@ const register = async (req, res, next) => {
       name
     };
     await insert(data);
-    // sendEmail(email);
+    sendEmail(data);
     response(res, data, 201, "you are successfully registered");
   } catch (error) {
     console.log(error);
@@ -77,7 +78,7 @@ const getProfile = async (req, res, next) => {
 
   try {
     const { rows: [user] } = await findEmail(email);
-
+    
     if (user === undefined) {
       res.json({
         message: "invalid token"
@@ -138,11 +139,29 @@ const refreshToken = (req, res) => {
   };
   response(res, result, 200, "you are successfully logged in");
 };
+
+const activation = async (req, res, next) => {
+  try {
+    // const token = req.params.token
+    const id = req.params.id;
+    const strId = id.toString();
+    console.log("id => ",strId);
+    const { rowCount: user } = await checkIdUser(strId);
+    console.log(user);
+    await activate(id);
+    res.redirect("");
+  } catch (error) {
+    console.log(error);
+    next(createError[500]("Something Wrong"));
+  }
+
+};
 module.exports = {
   register,
   login,
   getProfile,
   getProfileById,
   delUser,
-  refreshToken
+  refreshToken,
+  activation
 };
