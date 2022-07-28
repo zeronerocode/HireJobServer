@@ -52,7 +52,7 @@ const login = async (req, res, next) => {
     const payload = {
       email: user.email,
       full_name: user.full_name,
-      role: user.roles,
+      role: user.role,
       id: user.id,
       hp: user.hp,
       jobdesk: user.jobdesk,
