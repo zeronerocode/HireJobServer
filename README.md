@@ -40,6 +40,7 @@ Hire Job Rest API, is REST API used in [`Hire Job | Peworld Web App`](https://hi
 
 * [Node JS](https://nodejs.org/en/docs/)
 * [Express JS](https://expressjs.com/)
+* [PostgreSQL](https://www.postgresql.org/)
 * [Node Mailer](https://nodemailer.com/)
 * [Cloudinary](https://cloudinary.com/)
 
