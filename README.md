@@ -95,7 +95,9 @@ Contributions are what make the open source community such an amazing place to b
 
 
 ## Related Project
-* [`Hire Job Web App`](https://hirejob-fe.vercel.app/)
+* [`Hire Job Web App`](https://hirejob-fe-fwzfrds.vercel.app/)
+* [`Hire Job Front End Repository`](https://github.com/fwzfrds/arkasa-fe)
+* [`Hire Job Postman`](https://solar-space-264243.postman.co/workspace/Hire-Job-API~3b478180-c785-4618-a4da-2465d98cb64e/overview)
 
 
 <!-- CONTACT -->
